@@ -1,0 +1,338 @@
+东软颐养中心管理系统-数据库设计
+1.3 数据库设计
+  1.3.1 ER图
+  1.3.2 数据库设计总表
+  1.3.3 数据库表设计
+    1.3.3.1 user表
+    1.3.3.2 bed表
+    1.3.3.3 beddetails表
+    1.3.3.4 room表
+    1.3.3.5 role表
+    1.3.3.6 menu表
+    1.3.3.7 rolemenu表
+    1.3.3.8 nursecontent表
+    1.3.3.9 nurselevel表
+    1.3.3.10 nurselevelitem表
+    1.3.3.11 nurserecord表
+    1.3.3.12 customernurseitem表
+    1.3.3.13 outward表
+    1.3.3.14 backdown表
+    1.3.3.15 food表
+    1.3.3.16 preference表
+    1.3.3.17 meal表
+    1.3.3.18 customer表
+  任务4：数据库设计-ER图设计
+  任务5：数据库设计-表设计
+
+1.3 数据库设计
+1.3.1 ER图
+                                  1
+东软颐养中心数据库设计-ER图
+
+
+
+
+1.3.2 数据库设计总表
+东软颐养中心数据库设计-总表
+ No     名称           中文名       说明
+ 1      user         用户表       存储用户信息
+ 2      bed          床位表       存储房间床位信息
+ 3      beddetails   床位详细信息表   存储床位详细信息
+ 4      room         房间表       存储方间楼层等信息
+ 5      role         角色表       存储角色信息
+ 6      menu         菜单表       存储前端路由菜单信息
+                                            2
+ 7              rolemenu                 角色菜单对应表      存储角色和菜单的对应情况
+ 8              nursecontent             护理内容表        存储护理内容信息
+ 9              nurselevel               护理等级表        存储护理等级信息
+ 10             nurselevelitem           护理等级项目对应表    存储护理等级及项目对应信息
+ 11             nurserecord              护理记录表        存储护理记录信息
+ 12             customernurseitem        顾客护理条目表      存储顾客护理条目
+ 13             outward                  外出登记表        存储外出登记信息
+ 14             backdown                 退住登记表        存储退住登记信息
+ 15             food                     食品表          存储食品信息
+ 16             customerpreferenc        客户喜好表        存储客户喜好信息
+                e
+ 17             meal                     膳食日历表        存储膳食日历信息
+ 18             customer                 客户表          存储客户信息
+
+1.3.3 数据库表设计
+1.3.3.1 user表
+ 字段              类型                 长度           非空   主键         备注
+ id              int                             √    √          主键
+ create_time     date                            √               创建时间
+ create_by       int                             √               创建者
+ update_time     date                            ×               更新时间
+ update_by       int                             ×               更新者
+ is_deleted      int                             √               逻辑删除标记
+                                                                 （0：显示；
+                                                                 1：隐藏）
+ nickname        varchar            20           √               真实姓名
+                                                                          3
+ username       varchar    20        √        系统账号
+ password       varchar    20        √        密码
+ sex            int                  √        性别（0：女
+                                              1：男）
+ email       varchar       254       ×        邮箱
+ phone_numbe varchar       20        √        电话号码
+ r
+ role_id     int                     √        系统角色编号
+                                              （1-管理员 2-
+                                              健康管家）
+
+
+1.3.3.2 bed表
+ 字段            类型         长度     非空      主键   备注
+ id            int               √       √    主键
+ room_no       int               √            房间编号
+ bed_status    int               √            房间状态 1：
+                                              空闲 2：有人
+                                              3：外出
+ remarks       varchar    255    ×            备注
+ bed_no        varchar    20     √            床位编号
+
+
+1.3.3.3 beddetails表
+ 字段            类型         长度     非空      主键   备注
+ id            int               √            主键
+ start_date    date              ×            床位起始日期
+
+                                                          4
+ end_date       date             ×         床位结束日期
+ bed_details    varchar    255   ×         床位详情信息
+ customer_id    int              ×         顾客ID
+ bed_id         int              ×         床位ID
+ is_deleted     int              ×         逻辑删除标记
+                                           （0：显示；
+                                           1：隐藏）
+
+1.3.3.4 room表
+ 字段             类型         长度    非空   主键   备注
+ id             int              √    √    主键
+ room_floor     varchar    10    √         房间楼层
+ room_no        int              √         房间编号
+
+1.3.3.5 role表
+ 字段             类型         长度    非空   主键   备注
+ id             int              √    √    主键
+ create_time    datetime   6     √         创建时间
+ update_time    datetime   6     ×         更新时间
+ update_by      int              ×         更新人
+ is_deleted     int              √         逻辑删除标记
+                                           （0：显示；
+                                           1：隐藏）
+ name           varchar    50    √         系统角色名
+
+1.3.3.6 menu表
+
+                                                    5
+ 字段              类型        长度    非空   主键   备注
+ id              int             √    √    主键
+ menus_index     varchar   5     ×         一级菜单索引
+ title           varchar   50    √         菜单标题
+ icon            varchar   50    √         菜单图标
+ path            varchar   100   ×         菜单路径
+ parent_id       int             ×         父级Id
+
+1.3.3.7 rolemenu表
+ 字段              类型        长度    非空   主键   备注
+ id              int             √    √    主键
+ role_id         int             √         角色编号
+ menu            int             √         菜单编号
+
+1.3.3.8 nursecontent表
+ 字段              类型        长度    非空   主键   备注
+ id              int             √    √    主键
+ serial_numbe    varchar   20    √         编号
+ r
+ nursing_nam     varchar   55    √         名称
+ e
+ service_price   varchar   55    √         价格
+ message         varchar   100   ×         描述
+ status          int             √         状态 1：启
+                                           用；2：停用
+
+
+                                                    6
+ execution_cy varchar      20   ×         执行周期
+ cle
+ execution_ti varchar      20   ×         执行次数
+ mes
+ is_deleted int                 ×         逻辑删除标记
+                                          （0：显示；
+                                          1：隐藏）
+
+1.3.3.9 nurselevel表
+ 字段             类型         长度   非空   主键   备注
+ id             int             √    √    主键
+ level_name     varchar    20   √         护理级别
+ level_status   int             ×         级别状态 1：
+                                          启用；2：停
+                                          用
+ is_deleted     int             ×         逻辑删除标记
+                                          （0：显示；
+                                          1：隐藏）
+
+1.3.3.10 nurselevelitem表
+ 字段             类型         长度   非空   主键   备注
+ id             int             √    √    主键
+ level_id       int             √         关联护理级别
+ item_id        int             √         关联护理项目
+
+1.3.3.11 nurserecord表
+ 字段             类型         长度   非空   主键   备注
+
+                                                    7
+ id             int                 √    √    主键
+ is_deleted     int                 √         逻辑删除标记
+                                              （0：显示；
+                                              1：隐藏）
+ customer_id    int                 √         客户ID
+ item_id        int                 √         护理项目ID
+ nursing_time   datetime            √         护理时间
+ nursing_cont   varchar       255   ×         护理内容
+ ent
+ nursing_coun   int                 √         护理数量
+ t
+ user_id        int                 √         护理人员ID
+
+1.3.3.12 customernurseitem表
+ 字段             类型            长度    非空   主键   备注
+ id             int                 √    √    主键
+ item_id        int                 √         护理项目编号
+ custormer_id   int                 √         客户编号
+ level_id       int                 ×         护理级别编号
+ nurse_numbe    int                 √         购买数量
+ r
+ is_deleted     int                 ×         逻辑删除标记
+                                              （0：显示；
+                                              1：隐藏）
+ buy_time      date                 √         服务购买日期
+ maturity_time date                 √         服务到期日
+
+1.3.3.13 outward表
+                                                       8
+ 字段               类型        长度    非空   主键   备注
+ id               int             √    √    主键
+ remarks          varchar   100   ×         备注
+ is_deleted       int             √         逻辑删除标记
+                                            （0：显示；
+                                            1：隐藏）
+ customer_id      int             √         客户ID
+ outgoingreas     varchar   100   √         外出事由
+ on
+ outgoingtime     date            √         外出时间
+ expectedretu     date            √         预计回院时间
+ rntime
+ actualreturnti   date            ×         实际回院时间
+ me
+ escorted         varchar   50    ×         陪同人
+ relation         varchar   50    ×         与老人关系
+ escortedtel      varchar   50    ×         陪同人电话
+ auditstatus      int             √         审批状态 0-
+                                            已提交 1-同
+                                            意 2-拒绝
+ auditperson      varchar   50    ×         审批人
+ audittime        date            ×         审批时间
+
+1.3.3.14 backdown表
+ 字段               类型        长度    非空   主键   备注
+ id               int             √    √    主键
+ remarks          varchar   100   ×         备注
+
+                                                      9
+ is_deleted      int                       √                     逻辑删除标记
+                                                                 （0：显示；
+                                                                 1：隐藏）
+ customer_id int                           √                     客户ID
+ retreattime date                          √                     退住时间
+ retreattype int                           √                     退住类型 0-
+                                                                 正常退住 1-
+                                                                 死亡退住 2-
+                                                                 保留床位
+ retreatreason varchar           100       ×                     退住原因
+ auditstatus int                           √                     审批状态 0-
+                                                                 已提交 1-同
+                                                                 意 2-拒绝
+ auditperson     varchar         100       ×                     审批人
+ audittime       date                      ×                     审批时间
+
+1.3.3.15 food表
+ 字段            类型类型        长度长度        小数非空     非空主键        主键    备注备注
+ id            int                              √           √     主键
+ food_name     varchar     30                   ×                 食品名称
+ food_type     varchar     30                   ×                 食品类型
+ price         decimal     10          2        ×                 价格
+ is_halal      int                              ×                 是否清真
+ food_img      varchar     100                  ×                 图片路径
+
+1.3.3.16 preference表
+ 字段              类型              长度        非空          主键        备注
+
+                                                                         10
+ id              int                      √       √    主键
+ customer_id     int                      ×            顾客ID
+ preferences     varchar         30       ×            饮食喜好
+ attention       varchar         30       ×            注意事项
+ remark          varchar         30       ×            备注
+ is_deleted      int                      ×            逻辑删除标记
+                                                       （0：显示；
+                                                       1：隐藏）
+
+1.3.3.17 meal表
+ 字段              类型              长度       非空      主键   备注
+ id              int                      √       √    主键
+ week_day        varchar         10       √            星期几
+ food_id         int                      ×            食品ID
+ meal_type       int                      ×            食品类型（1.
+                                                       早餐、2.午
+                                                       餐、3.晚餐）
+ taste           varchar         30       ×            口味（多糖、
+                                                       多盐、少糖、
+                                                       少盐）
+ is_deleted      int                      ×            逻辑删除标记
+                                                       （0：显示；
+                                                       1：隐藏）
+
+1.3.3.18 customer表
+  字段                       类型         长度 非空    主键 备注
+  id                       int           √     √ 主键
+
+                                                             11
+is_deleted            int            √   逻辑删除标记（0：显示；1：
+                                         隐藏）
+customer_name         varchar   20  √    客户姓名
+customer_age          int           √    年龄
+customer_sex          int           √    性别 0：男 1：女
+idcard                varchar   20 √     身份证号
+room_no               varchar   20 √     房间号
+building_no           varchar   11 √     所属楼房
+checkin_date          date          √    入住时间
+expiration_date       date          √    合同到期时间
+contact_tel           varchar   20 √     联系电话
+bed_id                int           √    床号
+psychosomatic_state   varchar   255 ×    身心状况
+attention             varchar   255 ×    注意事项
+birthday              date          ×    出生日期
+height                varchar   20 ×     身高
+weight                varchar   20 ×     体重
+blood_type            varchar   20 √     血型
+filepath              varchar   50 √     头像路径
+user_id               int           ×    关联系统健康管家(护工) 无管
+                                         家设置 -1
+level_id              int            ×   护理等级
+family_member         varchar   20   ×   家属
+
+
+
+                                                       12
+任务4：数据库设计-ER图设计
+学生完成数据库ER图设计，提交成果物ER图。
+任务5：数据库设计-表设计
+学生按照设计的ER图，完成数据库表设计文档。提交成果物数据库表设计文档。
+
+
+
+
+                                       13
+
