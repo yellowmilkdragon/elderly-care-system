@@ -1,13 +1,13 @@
-import LoginView from "../views/auth/LoginView.vue";
-import DashboardView from "../views/dashboard/DashboardView.vue";
-import CustomerListView from "../views/customer/CustomerListView.vue";
-import BedOverviewView from "../views/bed/BedOverviewView.vue";
-import NursingItemView from "../views/nursing/NursingItemView.vue";
-import NursingLevelView from "../views/nursing/NursingLevelView.vue";
-import ApprovalView from "../views/approval/ApprovalView.vue";
-import CaregiverView from "../views/caregiver/CaregiverView.vue";
-import UserManagementView from "../views/system/UserManagementView.vue";
-import MainLayout from "../components/layout/MainLayout.vue";
+const LoginView = () => import("../views/auth/LoginView.vue");
+const DashboardView = () => import("../views/dashboard/DashboardView.vue");
+const CustomerListView = () => import("../views/customer/CustomerListView.vue");
+const BedOverviewView = () => import("../views/bed/BedOverviewView.vue");
+const NursingItemView = () => import("../views/nursing/NursingItemView.vue");
+const NursingLevelView = () => import("../views/nursing/NursingLevelView.vue");
+const ApprovalView = () => import("../views/approval/ApprovalView.vue");
+const CaregiverView = () => import("../views/caregiver/CaregiverView.vue");
+const UserManagementView = () => import("../views/system/UserManagementView.vue");
+const MainLayout = () => import("../components/layout/MainLayout.vue");
 
 export const routes = [
   {
