@@ -3,6 +3,7 @@ import { computed, onMounted, reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { nursingApi } from "../../api/modules";
 
+// 刘文康：护理项目页面，负责护理项目的查询、新增和编辑。
 const pageLoading = ref(false);
 const submitLoading = ref(false);
 const items = ref([]);
@@ -35,6 +36,7 @@ const filteredItems = computed(() =>
 );
 
 async function loadItems() {
+  // 刘文康：页面初始化时加载护理项目数据。
   pageLoading.value = true;
   try {
     const response = await nursingApi.items();
@@ -45,6 +47,7 @@ async function loadItems() {
 }
 
 function resetForm() {
+  // 刘文康：为新增护理项目准备默认表单。
   Object.assign(form, {
     serialNumber: "",
     nursingName: "",
@@ -69,6 +72,7 @@ function openEdit(item) {
 }
 
 async function submitForm() {
+  // 刘文康：统一处理护理项目新增与修改逻辑。
   if (!form.serialNumber || !form.nursingName) {
     ElMessage.warning("请填写项目编号和项目名称");
     return;

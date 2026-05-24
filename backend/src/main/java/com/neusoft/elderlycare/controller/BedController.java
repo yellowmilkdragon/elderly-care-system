@@ -17,6 +17,7 @@ import java.util.Map;
 @RequestMapping("/api/beds")
 public class BedController {
 
+    // 鲍建华：床位管理模块接口入口，负责床位示意图、空闲床位查询和调床操作。
     private final DemoDataStore demoDataStore;
 
     public BedController(DemoDataStore demoDataStore) {
@@ -25,6 +26,7 @@ public class BedController {
 
     @GetMapping("/overview")
     public ApiResponse<Map<String, Object>> overview() {
+        // 鲍建华：统计床位总数、空闲数、入住数和外出数，用于床位总览卡片。
         long freeBeds = demoDataStore.getBeds().stream().filter(bed -> bed.getBedStatus() == 1).count();
         long occupiedBeds = demoDataStore.getBeds().stream().filter(bed -> bed.getBedStatus() == 2).count();
         long outwardBeds = demoDataStore.getBeds().stream().filter(bed -> bed.getBedStatus() == 3).count();
@@ -38,6 +40,7 @@ public class BedController {
 
     @GetMapping("/available")
     public ApiResponse<List<Map<String, Object>>> available() {
+        // 鲍建华：仅返回当前空闲床位，给调床弹窗提供候选床位。
         List<Map<String, Object>> availableBeds = demoDataStore.getBeds().stream()
                 .filter(bed -> bed.getBedStatus() == 1)
                 .map(bed -> Map.<String, Object>of(
@@ -52,6 +55,7 @@ public class BedController {
 
     @GetMapping("/rooms")
     public ApiResponse<List<Map<String, Object>>> rooms() {
+        // 鲍建华：按房间组织床位结构，并补充床位主人的姓名，便于绘制床位示意图。
         List<Map<String, Object>> roomData = demoDataStore.getRooms().stream()
                 .map(room -> Map.<String, Object>of(
                         "id", room.getId(),
@@ -67,7 +71,7 @@ public class BedController {
                                                 .filter(customer -> bed.getId().equals(customer.getBedId()))
                                                 .map(Customer::getCustomerName)
                                                 .findFirst()
-                                                .orElse("暂无入住")
+                                                .orElse("鏆傛棤鍏ヤ綇")
                                 ))
                                 .toList()
                 ))
@@ -77,6 +81,7 @@ public class BedController {
 
     @PostMapping("/transfer")
     public ApiResponse<Customer> transfer(@RequestBody BedTransferRequest request) {
-        return ApiResponse.ok("调床成功", demoDataStore.transferBed(request.customerId(), request.newBedId()));
+        // 鲍建华：执行调床，联动更新客户绑定床位和床位状态。
+        return ApiResponse.ok("璋冨簥鎴愬姛", demoDataStore.transferBed(request.customerId(), request.newBedId()));
     }
 }

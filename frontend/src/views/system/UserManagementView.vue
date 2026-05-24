@@ -2,6 +2,7 @@
 import { computed, onMounted, reactive, ref } from "vue";
 import { userApi } from "../../api/modules";
 
+// 刘宸宇：用户管理页面，负责基础信息维护展示和账号详情查看。
 const pageLoading = ref(false);
 const drawerVisible = ref(false);
 const selectedUser = ref(null);
@@ -26,6 +27,7 @@ const filteredUsers = computed(() =>
 );
 
 async function loadUsers() {
+  // 刘宸宇：初始化加载系统用户列表。
   pageLoading.value = true;
   try {
     const response = await userApi.users();
@@ -36,6 +38,7 @@ async function loadUsers() {
 }
 
 function openDetail(user) {
+  // 刘宸宇：打开抽屉查看指定账号详情。
   selectedUser.value = user;
   drawerVisible.value = true;
 }

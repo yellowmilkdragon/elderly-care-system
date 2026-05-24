@@ -3,6 +3,7 @@ import { computed, onMounted, reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { bedApi, customerApi } from "../../api/modules";
 
+// 鲍建华：床位管理页面，负责床位总览、示意图和调床交互。
 const pageLoading = ref(false);
 const overview = ref({});
 const rooms = ref([]);
@@ -64,6 +65,7 @@ const smartInsight = computed(() => {
 });
 
 async function loadData() {
+  // 鲍建华：并行拉取床位总览、房间、客户和空闲床位，保证视图一致。
   pageLoading.value = true;
   try {
     const [overviewResponse, roomsResponse, customerResponse, bedResponse] = await Promise.all([
@@ -82,6 +84,7 @@ async function loadData() {
 }
 
 function openTransfer() {
+  // 鲍建华：调床前先判断是否存在可操作的客户和空闲床位。
   if (!selectableCustomers.value.length) {
     ElMessage.warning("当前没有可调床的客户数据");
     return;
@@ -96,6 +99,7 @@ function openTransfer() {
 }
 
 async function submitTransfer() {
+  // 鲍建华：执行调床后刷新床位状态，并生成最近一次调床反馈。
   if (!transferForm.customerId || !transferForm.newBedId) {
     ElMessage.warning("请选择客户和目标床位");
     return;

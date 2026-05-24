@@ -3,6 +3,7 @@ import { computed, onMounted, reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { customerApi, userApi } from "../../api/modules";
 
+// 张文辉：健康管家页面，负责设置服务对象、服务关注和分配反馈。
 const pageLoading = ref(false);
 const caregivers = ref([]);
 const customers = ref([]);
@@ -24,6 +25,7 @@ const unassignedCustomers = computed(() =>
 );
 
 async function loadData() {
+  // 张文辉：同步加载健康管家与客户列表，用于分配操作和负载分析。
   pageLoading.value = true;
   try {
     const [caregiverResponse, customerResponse] = await Promise.all([
@@ -38,6 +40,7 @@ async function loadData() {
 }
 
 function openAssign() {
+  // 张文辉：打开分配弹窗前先校验基础数据是否完整。
   if (!customers.value.length) {
     ElMessage.warning("当前没有可分配的客户");
     return;
@@ -52,6 +55,7 @@ function openAssign() {
 }
 
 async function submitAssign() {
+  // 张文辉：提交服务对象分配并刷新健康管家列表。
   if (!assignForm.customerId || !assignForm.caregiverId) {
     ElMessage.warning("请选择客户和健康管家");
     return;

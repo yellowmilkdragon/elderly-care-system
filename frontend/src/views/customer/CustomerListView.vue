@@ -3,6 +3,7 @@ import { computed, onMounted, reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { customerApi, userApi } from "../../api/modules";
 
+// 呼杨柯：客户管理页面，负责入住登记、客户档案维护和详情查看。
 const pageLoading = ref(false);
 const submitLoading = ref(false);
 const customers = ref([]);
@@ -63,6 +64,7 @@ const filteredCustomers = computed(() =>
 );
 
 async function loadData() {
+  // 呼杨柯：页面初始化时并行加载客户列表与健康管家列表。
   pageLoading.value = true;
   try {
     const [customerResponse, caregiverResponse] = await Promise.all([
@@ -77,6 +79,7 @@ async function loadData() {
 }
 
 function resetForm() {
+  // 呼杨柯：新建客户时重置表单默认值。
   Object.assign(form, {
     customerName: "",
     customerAge: 75,
@@ -115,6 +118,7 @@ function openDetail(customer) {
 }
 
 async function submitForm() {
+  // 呼杨柯：统一处理客户新增与编辑提交流程。
   if (!form.customerName || !form.roomNo) {
     ElMessage.warning("请先填写客户姓名和房间号");
     return;
